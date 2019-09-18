@@ -6,7 +6,12 @@
     </div>
 
     <div id="inputs">
-      <input v-model="uri" @keyup.enter="doFetch" placeholder="Enter REST-API URL"/>
+      <input v-model="uri" @keyup.enter="doFetch"
+             placeholder="Enter REST-API URL"
+             size="80"
+             autocomplete="on"
+             type="url"
+             autofocus/>
       <button @click="doFetch">OK</button>
     </div>
 
@@ -51,6 +56,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      color: #d9eeec;
+      background-color: #64b3cd;
+      border: 1px solid #da9833;
   }
 
   #inputs {
@@ -63,10 +71,16 @@
       left: 5%;
       margin: 1em;
       right: 5%;
+      background-color: #d9eeec;
+  }
+
+  #container {
+      background-color: #d9eeec;
+      color: #3c70a4;
   }
 
   #container:hover {
-      background-color: #f0f0fa;
+      background-color: #64b2cd;
   }
 
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <span @click.stop="enabled = !enabled" id="container">
-    {
-    <div v-show="enabled" id="value" v-for="v, k in json" v-bind:key="k">
-      {{k}}: <Json v-bind:json="v" />
+  <span @click.stop="enabled = !enabled">
+    <a id="container">{</a>
+    <div v-show="enabled" class="value" v-for="v, k in json" v-bind:key="k">
+      <a id="container">{{k}}</a>: <Json v-bind:json="v" />
     </div>
     <span v-show="!enabled">...</span>
-    }
+    <a id="container">}</a>
   </span>
 </template>
 
@@ -29,7 +29,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #value {
+  .value {
       margin-left: 1em;
   }
 </style>

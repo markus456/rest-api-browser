@@ -1,13 +1,13 @@
 <template>
-  <span @click.stop="enabled = !enabled" id="container">
-    [
+  <span @click.stop="enabled = !enabled">
+    <a id="container">[</a>
     <span v-if="enabled || json.length == 0">
       <div id="value" v-for="v, k in json" v-bind:key="k">
         <Json v-bind:json="v" />
       </div>
     </span>
     <span v-else>...</span>
-    ]
+    <a id="container">]</a>
   </span>
 </template>
 
