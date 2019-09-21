@@ -2,17 +2,14 @@
   <div>
 
     <div id="header">
-      <h2>REST API Browser</h2>
-    </div>
-
-    <div id="inputs">
-      <input v-model="uri" @keyup.enter="doFetch"
+      <p>REST API Browser</p>
+      <input v-model="uri"
+             @keyup.enter="doFetch"
+             @keyup.up="prevUrl"
+             @keyup.down="nextUrl"
              placeholder="Enter REST-API URL"
-             size="80"
-             autocomplete="on"
              type="url"
              autofocus/>
-      <button @click="doFetch">OK</button>
     </div>
 
     <Json id="content" v-if="raw_data" v-bind:json="raw_data" />
@@ -25,7 +22,8 @@
       data () {
           return {
               raw_data: null,
-              uri: ''
+              uri: '',
+              history: []
           }
       },
       mounted() {
@@ -45,8 +43,26 @@
               fetch(this.$data.uri)
                   .then(res => res.json())
                   .then(d => this.$data.raw_data = d)
+                  .then(() => {
+                      if (this.$data.history[this.$data.history.length - 1] != this.$data.uri) {
+                          this.$data.history.push(this.$data.uri)
+                      }
+                      this.$data.history_pos = this.$data.history.length - 1
+                  })
                   .catch(err => this.$data.raw_data = 'Failed to fetch API: ' + err)
-          }
+          },
+          prevUrl() {
+              if (this.$data.history_pos > 0) {
+                  this.$data.history_pos--
+              }
+              this.$data.uri = this.$data.history[this.$data.history_pos]
+          },
+          nextUrl() {
+              if (this.$data.history_pos < this.$data.history.length -1) {
+                  this.$data.history_pos++
+                  this.$data.uri = this.$data.history[this.$data.history_pos]
+              }
+          },
       }
   }
 </script>
@@ -54,11 +70,23 @@
 <style>
   #header {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: row;
+      justify-content: left;
+      align-items: left;
       color: #d9eeec;
       background-color: #64b3cd;
       border: 1px solid #da9833;
+  }
+
+  #header p {
+      padding-right: 15px;
+  }
+
+  #header input {
+      flex: auto;
+      font-size: 16px;
+      padding-left: 15px;
+      font-family: monospace;
   }
 
   #inputs {
@@ -72,6 +100,7 @@
       margin: 1em;
       right: 5%;
       background-color: #d9eeec;
+      font-family: monospace;
   }
 
   #container {
