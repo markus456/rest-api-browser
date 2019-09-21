@@ -1,11 +1,13 @@
 <template>
-  <span @click.stop="enabled = !enabled">
-    <a id="container">{</a>
+  <span>
+    <span v-if="enabled">
+    <a id="container" @click.stop="enabled = !enabled">{</a>
     <div v-show="enabled" class="value" v-for="v, k in json" v-bind:key="k">
       <a id="container">{{k}}</a>: <Json v-bind:json="v" />
     </div>
-    <span v-show="!enabled">...</span>
-    <a id="container">}</a>
+    <a id="container" @click.stop="enabled = !enabled">}</a>
+    </span>
+    <span v-else id="container" @click.stop="enabled = !enabled">{...}</span>
   </span>
 </template>
 
